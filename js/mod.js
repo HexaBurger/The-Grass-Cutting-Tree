@@ -1,8 +1,8 @@
 let modInfo = {
-	name: "The ??? Tree",
-	id: "tmthxmd",
+	name: "The Grass Cutting Tree",
+	id: "tgcthxm",
 	author: "HexaBurger",
-	pointsName: "points",
+	pointsName: "grass",
 	modFiles: ["layers.js", "tree.js"],
 
 	discordName: "",
@@ -43,6 +43,8 @@ function getPointGen() {
 		return new Decimal(0)
 
 	let gain = new Decimal(1)
+	gain = gain.mul(buyableEffect("lv",11))
+	gain = gain.mul(buyableEffect("pk",11))
 	return gain
 }
 
