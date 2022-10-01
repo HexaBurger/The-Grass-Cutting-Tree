@@ -4,7 +4,8 @@ addLayer("lv", {
     position: 2, // Horizontal position within a row. By default it uses the layer id and sorts in alphabetical order
     startData() { return {
         unlocked: true,
-		points: new Decimal(1),
+	points: new Decimal(1),
+	curPoints: 0,
         autoLevel: false
     }},
     color: "#26abff",
@@ -29,6 +30,7 @@ addLayer("lv", {
     layerShown(){return true},
     automate() {
         if (canReset("lv") && hasMilestone("pp", 0)) { doReset("lv") }
+	curPoints = player.points
     },
     /*upgrades: {
         11: {
@@ -88,7 +90,7 @@ addLayer("lv", {
             title: "Range",
             tooltip: "1+log10(grass)^0.75*x",
             cost(x) { return new Decimal(10).pow(x).mul(10000).floor() },
-            effect(x) { return player.points.log10().pow(0.75).mul(x).add(1) },
+            effect(x) { return curPoints.add(1).log10().pow(0.75).mul(x).add(1) },
             display() { return `Increases grass based on grass
                                 Amount: ${getBuyableAmount(this.layer, this.id)}/10
                                 Effect: ${buyableEffect(this.layer, this.id).floor()}x
