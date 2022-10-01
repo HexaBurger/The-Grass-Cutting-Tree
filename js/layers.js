@@ -13,7 +13,7 @@ addLayer("lv", {
     baseResource: "grass", // Name of resource prestige is based on
     baseAmount() {return player.points}, // Get the current amount of baseResource
     type: "static", // normal: cost to gain currency depends on amount gained. static: cost depends on how much you already have
-    exponent: 0.75, // Prestige currency exponent
+    exponent: 0.8, // Prestige currency exponent
     gainMult() { // Calculate the multiplier for main currency from bonuses
         mult = new Decimal(1)
         mult = mult.mul(buyableEffect("lv",12))
@@ -70,9 +70,9 @@ addLayer("lv", {
         },
         13: {
             title: "Speed",
-            tooltip: "",
+            tooltip: "log10(time)*x",
             cost(x) { return new Decimal(10).pow(x).mul(1000).floor() },
-            effect(x) { return new Decimal(player[this.layer].resetTime).root(10).mul(x).floor().add(1) },
+            effect(x) { return new Decimal(player[this.layer].resetTime).log10().mul(x).floor(0.01).add(1) },
             display() { return `Increases grass based on time since last level reset
                                 Amount: ${getBuyableAmount(this.layer, this.id)}/10
                                 Effect: ${buyableEffect(this.layer, this.id)}x
@@ -82,7 +82,23 @@ addLayer("lv", {
                 if (!hasMilestone("pp", 1)) { player.points = player.points.sub(this.cost()) }
                 setBuyableAmount(this.layer, this.id, getBuyableAmount(this.layer, this.id).add(1))
             },
-            purchaseLimit: new Decimal(700)
+            purchaseLimit: new Decimal(10)
+        },
+        14: {
+            title: "Range",
+            tooltip: "log10(grass)*x",
+            cost(x) { return new Decimal(10).pow(x).mul(10000).floor() },
+            effect(x) { return new Decimal(player.points).log10().mul(x).floor(0.01).add(1) },
+            display() { return `Increases grass based on grass
+                                Amount: ${getBuyableAmount(this.layer, this.id)}/10
+                                Effect: ${buyableEffect(this.layer, this.id)}x
+                                Cost: ${this.cost()} grass` },
+            canAfford() { return player.points.gte(this.cost()) },
+            buy() {
+                if (!hasMilestone("pp", 1)) { player.points = player.points.sub(this.cost()) }
+                setBuyableAmount(this.layer, this.id, getBuyableAmount(this.layer, this.id).add(1))
+            },
+            purchaseLimit: new Decimal(10)
         },
         21: {
             title: "PP",
