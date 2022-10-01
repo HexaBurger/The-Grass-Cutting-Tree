@@ -5,7 +5,6 @@ addLayer("lv", {
     startData() { return {
         unlocked: true,
 	points: new Decimal(1),
-	curPoints: 0,
         autoLevel: false
     }},
     color: "#26abff",
@@ -90,7 +89,10 @@ addLayer("lv", {
             title: "Range",
             tooltip: "1+log10(grass)^0.75*x",
             cost(x) { return new Decimal(10).pow(x).mul(10000).floor() },
-            effect(x) { return curPoints.add(1).log10().pow(0.75).mul(x).add(1) },
+            effect(x) { 
+		    pts = player.points
+		    return pts.add(1).log10().pow(0.75).mul(x).add(1)
+	    },
             display() { return `Increases grass based on grass
                                 Amount: ${getBuyableAmount(this.layer, this.id)}/10
                                 Effect: ${buyableEffect(this.layer, this.id).mul(100).floor().div(100)}x
