@@ -43,7 +43,7 @@ addLayer("lv", {
             display() { return `Increases grass gained by 100%
                                 Doubles effect every 25
                                 Amount: ${getBuyableAmount(this.layer, this.id)}/250
-                                Effect: ${buyableEffect(this.layer, this.id)}x
+                                Effect: ${buyableEffect(this.layer, this.id).floor()}x
                                 Cost: ${this.cost()} grass` },
             canAfford() { return player.points.gte(this.cost()) },
             buy() {
@@ -70,12 +70,12 @@ addLayer("lv", {
         },
         13: {
             title: "Speed",
-            tooltip: "log10(time)*x",
+            tooltip: "1+log10(time)*x",
             cost(x) { return new Decimal(10).pow(x).mul(1000).floor() },
-            effect(x) { return new Decimal(player[this.layer].resetTime).log10().mul(x).floor(0.01).add(1) },
+            effect(x) { return new Decimal(player[this.layer].resetTime).log10().mul(x).add(1) },
             display() { return `Increases grass based on time since last level reset
                                 Amount: ${getBuyableAmount(this.layer, this.id)}/10
-                                Effect: ${buyableEffect(this.layer, this.id)}x
+                                Effect: ${buyableEffect(this.layer, this.id).floor()}x
                                 Cost: ${this.cost()} grass` },
             canAfford() { return player.points.gte(this.cost()) },
             buy() {
@@ -86,12 +86,12 @@ addLayer("lv", {
         },
         14: {
             title: "Range",
-            tooltip: "log10(grass)*x",
+            tooltip: "1+log10(grass)^0.75*x",
             cost(x) { return new Decimal(10).pow(x).mul(10000).floor() },
-            effect(x) { return new Decimal(player.points).log10().mul(x).floor(0.01).add(1) },
+            effect(x) { return new Decimal(player.points).log10().pow(0.75).mul(x).add(1) },
             display() { return `Increases grass based on grass
                                 Amount: ${getBuyableAmount(this.layer, this.id)}/10
-                                Effect: ${buyableEffect(this.layer, this.id)}x
+                                Effect: ${buyableEffect(this.layer, this.id).floor()}x
                                 Cost: ${this.cost()} grass` },
             canAfford() { return player.points.gte(this.cost()) },
             buy() {
