@@ -88,7 +88,7 @@ addLayer("lv", {
             title: "Range",
             tooltip: "1+log10(grass)^0.75*x",
             cost(x) { return new Decimal(10).pow(x).mul(10000).floor() },
-            effect(x) { return new Decimal(player.points).log10().pow(0.75).mul(x).add(1) },
+            effect(x) { return new Decimal(1).mul(player.points).log10().pow(0.75).mul(x).add(1) },
             display() { return `Increases grass based on grass
                                 Amount: ${getBuyableAmount(this.layer, this.id)}/10
                                 Effect: ${buyableEffect(this.layer, this.id).floor()}x
