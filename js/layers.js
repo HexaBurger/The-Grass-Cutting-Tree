@@ -39,7 +39,7 @@ addLayer("lv", {
         11: {
             title: "Grass value",
             cost(x) { return new Decimal(2).pow(x).mul(10).floor() },
-            effect(x) { return new Decimal(x.add(1)).mul(new Decimal(2).pow(x.div(25).floor())) },
+            effect(x) { return new Decimal(1).add(x).mul(new Decimal(2).pow(x.div(25).floor())) },
             display() { return `Increases grass gained by 100%
                                 Doubles effect every 25
                                 Amount: ${getBuyableAmount(this.layer, this.id)}/250
@@ -72,7 +72,7 @@ addLayer("lv", {
             title: "Speed",
             tooltip: "1+log10(time)*x",
             cost(x) { return new Decimal(10).pow(x).mul(1000).floor() },
-            effect(x) { return new Decimal(player[this.layer].resetTime).log10().mul(x).add(1) },
+            effect(x) { return new Decimal(player[this.layer].resetTime).max(1).log10().mul(x).add(1) },
             display() { return `Increases grass based on time since last level reset
                                 Amount: ${getBuyableAmount(this.layer, this.id)}/10
                                 Effect: ${buyableEffect(this.layer, this.id).mul(100).floor().div(100)}x
@@ -89,7 +89,7 @@ addLayer("lv", {
             tooltip: "1+total prestige points^(0.20*x)",
             cost(x) { return new Decimal(10).pow(x).mul(10000).floor() },
             effect(x) { 
-		    return player["pp"].total.pow(x.mul(0.20)).add(1)
+		    return player.points.max(1).log10().pow(x.mul(0.5)).max(1)
 	    },
             display() { return `Increases grass based on grass
                                 Amount: ${getBuyableAmount(this.layer, this.id)}/10
@@ -106,7 +106,7 @@ addLayer("lv", {
         21: {
             title: "PP",
             cost(x) { return new Decimal(2).pow(x).mul(5000).floor() },
-            effect(x) { return new Decimal(x.mul(0.1).add(1)).mul(new Decimal(1.25).pow(x.div(25).floor())) },
+            effect(x) { return new Decimal(0.1).mul(x).add(1).mul(new Decimal(1.25).pow(x.div(25).floor())) },
             display() { return `Increases prestige poitns gained by 10%
                                 Increases by 25% every 25
                                 Amount: ${getBuyableAmount(this.layer, this.id)}/200
@@ -146,7 +146,7 @@ addLayer("pk", {
         11: {
             title: "Value perk",
             cost(x) { return new Decimal(1) },
-            effect(x) { return new Decimal(1).add(player["lv"].points.mul(x.mul(0.1))) },
+            effect(x) { return new Decimal(1).add(player["lv"].points.mul(x).mul(0.1)) },
             display() { return `Increases grass gained by 10% times your level
                                 Amount: ${getBuyableAmount(this.layer, this.id)}/100
                                 Effect: ${buyableEffect(this.layer, this.id).mul(100).floor().div(100)}x
