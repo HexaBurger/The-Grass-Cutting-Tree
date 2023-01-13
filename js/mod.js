@@ -13,15 +13,17 @@ let modInfo = {
 
 // Set your version in num and name
 let VERSION = {
-	num: "0.1",
-	name: "Prestige point update",
+	num: "0.1.1",
+	name: "Tier update",
 }
 
 let changelog = `<h1>Changelog:</h1><br>
-	<h3>v0.1</h3><br>
-		- Finished level layer.<br>
-		- Added perks.<br>
-		- Added prestige points.`
+	<h3>v0.1.1</h3><br>
+		- Added tier.<br>
+		- Added platinum.<br>
+		- Reworked automation milestones.<br>
+		- Added crystals (without upgrades).<br>
+		- Added PP buyables and upgrades.`
 
 let winText = `Congratulations! You have reached the end and beaten this game, but for now...`
 
@@ -48,6 +50,7 @@ function getPointGen() {
 	gain = gain.mul(buyableEffect("lv",13))
 	gain = gain.mul(buyableEffect("lv",14))
 	gain = gain.mul(buyableEffect("pk",11))
+	gain = gain.mul(buyableEffect("pp",11))
 	return gain
 }
 
