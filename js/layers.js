@@ -90,7 +90,7 @@ addLayer("lv", {
             tooltip: "1+prestige points^(0.20*x)",
             cost(x) { return new Decimal(10).pow(x).mul(10000).floor() },
             effect(x) { 
-		    return player["pp"].points.pow(x.mul(0.20).add(1)
+		    return player["pp"].points.pow(x.mul(0.20)).add(1)
 	    },
             display() { return `Increases grass based on grass
                                 Amount: ${getBuyableAmount(this.layer, this.id)}/10
