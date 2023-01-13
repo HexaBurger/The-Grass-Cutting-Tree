@@ -86,10 +86,10 @@ addLayer("lv", {
         },
         14: {
             title: "Range",
-            tooltip: "1+prestige points^(0.20*x)",
+            tooltip: "1+total prestige points^(0.20*x)",
             cost(x) { return new Decimal(10).pow(x).mul(10000).floor() },
             effect(x) { 
-		    return player["pp"].points.pow(x.mul(0.20)).add(1)
+		    return player["pp"].total.pow(x.mul(0.20)).add(1)
 	    },
             display() { return `Increases grass based on grass
                                 Amount: ${getBuyableAmount(this.layer, this.id)}/10
@@ -100,6 +100,7 @@ addLayer("lv", {
                 if (!hasMilestone("pp", 1)) { player.points = player.points.sub(this.cost()) }
                 setBuyableAmount(this.layer, this.id, getBuyableAmount(this.layer, this.id).add(1))
             },
+	    unlocked() { return player["pp"].total.gt(0) },
             purchaseLimit: new Decimal(5)
         },
         21: {
