@@ -29,7 +29,6 @@ addLayer("lv", {
     layerShown(){return true},
     automate() {
         if (canReset("lv") && hasMilestone("pp", 0)) { doReset("lv") }
-	curPoints = player.points
     },
     /*upgrades: {
         11: {
@@ -85,7 +84,7 @@ addLayer("lv", {
             },
             purchaseLimit: new Decimal(10)
         },
-        /*14: {
+        14: {
             title: "Range",
             tooltip: "1+prestige points^(0.20*x)",
             cost(x) { return new Decimal(10).pow(x).mul(10000).floor() },
@@ -102,7 +101,7 @@ addLayer("lv", {
                 setBuyableAmount(this.layer, this.id, getBuyableAmount(this.layer, this.id).add(1))
             },
             purchaseLimit: new Decimal(5)
-        },*/
+        },
         21: {
             title: "PP",
             cost(x) { return new Decimal(2).pow(x).mul(5000).floor() },
