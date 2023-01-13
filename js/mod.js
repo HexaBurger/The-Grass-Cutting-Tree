@@ -18,12 +18,15 @@ let VERSION = {
 }
 
 let changelog = `<h1>Changelog:</h1><br>
-	<h3>v0.1.1</h3><br>
+	<h3>v0.1.1 The Tier update</h3><br>
 		- Added tier.<br>
 		- Added platinum.<br>
 		- Reworked automation milestones.<br>
 		- Added crystals (without upgrades).<br>
-		- Added PP buyables and upgrades.`
+		- Added PP buyables and upgrades.
+	<h3>v0.1 The Prestige update</h3><br>
+		- Added perks.
+		- Added prestige points.`
 
 let winText = `Congratulations! You have reached the end and beaten this game, but for now...`
 
